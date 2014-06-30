@@ -3,14 +3,14 @@
     <head>
         <script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
         <script>
-
+var AM = window.AM || {};
 (function () {
 
-            onDeviceReady = function () {
+            AM.onDeviceReady = function () {
                 alert('onDeviceReady');
-                document.addEventListener("backbutton", onBackKeyDown, false);
+                document.addEventListener("backbutton", AM.onBackKeyDown, false);
             };
-            onBackKeyDown = function () {
+            AM.onBackKeyDown = function () {
                 alert('onBackKeyDown');
                 //navigator.app.exitApp();
             };
@@ -19,7 +19,7 @@
             function onLoad () {
                 alert('onLoad');
                 'use strict';
-                document.addEventListener("deviceready", onDeviceReady, false);
+                document.addEventListener("deviceready", AM.onDeviceReady, false);
             }
         </script>
     </head>
