@@ -3,6 +3,9 @@
     <head>
         <script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
         <script>
+
+(function () {
+
             onDeviceReady = function () {
                 alert('onDeviceReady');
                 document.addEventListener("backbutton", onBackKeyDown, false);
@@ -11,7 +14,9 @@
                 alert('onBackKeyDown');
                 //navigator.app.exitApp();
             };
-            onLoad = function () {
+
+}());
+            function onLoad () {
                 alert('onLoad');
                 'use strict';
                 document.addEventListener("deviceready", onDeviceReady, false);
