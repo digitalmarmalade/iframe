@@ -1,41 +1,29 @@
 <html style="margin:0;padding:0;">
     <head>
-        <script type='text/javascript' src='http://clients.digitalmarmalade.co.uk/github/iframe/jquery-1.11.0.min.js'></script>
         <style type="text/css">
-            body { margin:0 !important; background:#333; color:#ccc; padding:0; font-family: sans-serif; }
-            #new { width:57px; height:57px; margin:10px; float:left; text-align: center; line-height: 50px; border-radius: 10px; padding:12px 0 0 12px; }
+            body { margin:0 !important; background:#fff; color:#333; padding:0; font-family: sans-serif; }
+            #headstrip { background:#333; padding:0px; }
+            #logo { float:left; height:26px; width:26px; border-radius:13px; background: #f90; margin:10px; }
+            #new { margin:10px; border-radius: 8px; float:right; background: #f90; padding: 5px 10px; font-size: 13px; font-weight: bold; cursor: pointer; }
+            #info { float:right; height:26px; width:26px; border-radius:13px; background: #f90; margin:10px; line-height:26px; text-align:center; font-weight:bold; }
             p { margin:10px; }
             #historylist { padding:0; }
-            #historylist li { padding:5px 10px; list-style-type: none; margin:0 5px 5px 0; }
-            img.trg { width:57px; height:57px; margin:10px; float:left; border-radius:10px; }
+            #historylist li { padding:5px 10px; list-style-type: none; margin:0 5px 5px 0; cursor:pointer; }
         </style>
-    </head>
-    <body>
-
-        <div id="new"><img src="http://clients.digitalmarmalade.co.uk/github/iframe/icon-add-32.png"/></div>
-        <div style="clear:both;"> &nbsp; </div>
-        <ul id="historylist">
-            <li class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/braintrainer/">braintrainer</li>
-            <li class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/cellblocks/">cellblocks</li>
-        </ul>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/braintrainer/">braintrainer</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/cellblocks/">cellblocks</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/codeword/">codeword</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/futoshiki/">futoshiki</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/kakuro/">kakuro</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/kenken/">kenken</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/lexica/">lexica</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/polygon/">polygon</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/setsquare/">setsquare</p>
-        <p class="trg" data-href="http://clients.digitalmarmalade.co.uk/newsuk/t2/_dev/suko/">suko</p>
-        <div style="clear:both;"> &nbsp; </div>
-        <!--<form id="manualform"><input id="manualitem" value="http://"/></form>-->
-
+        <script type='text/javascript' src='http://clients.digitalmarmalade.co.uk/github/iframe/jquery-1.11.0.min.js'></script>
         <script type='text/javascript'>
 
             $(function(){
 
-                $('.trg').click(function(){
+                var startState = '';
+
+                function saveStartState() {                    
+                    startState = $('body').html();
+                }
+
+
+
+                $('body').on('click', '.trg', function(){
                     goFrame($(this).data('href'));
                     return false;
                 });
@@ -74,9 +62,59 @@
                     localStorage.setItem('github/iframe/history', JSON.stringify(aURLs));
                 }
 
+                function readURLs() {
+                    var oHistory = JSON.parse(localStorage.getItem('github/iframe/history')) || [],
+                        aHistory = [],
+                        HTML = '',
+                        i;
+                    
+                    for (i = 0; i < oHistory.length; i = i + 1) {
+                        console.log(oHistory[i]);
+                        aHistory[oHistory[i].id] = oHistory[i].URL;
+                        aHistory[i] = oHistory[i].id;
+                        HTML += '<li class="trg" data-href="' + oHistory[i].URL + '">' + oHistory[i].URL + '</li>';
+                    }
+                        
+                    $('#historylist').html(HTML);
+
+
+                    console.log(oHistory);
+                    //aURL2s.sort(function (a, b) {return a - b; });
+                    console.log(aHistory);
+                }
+
+                readURLs();
+
             });
 
+    onDeviceReady = function () {
+        alert('onDeviceReady');
+		document.addEventListener("backbutton", onBackKeyDown, false);
+	};
+
+	onBackKeyDown = function () {
+		alert('a');
+		//navigator.app.exitApp();
+	};
+
+    function onLoad() {
+        'use strict';
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
         </script>
+
+    </head>
+    <body>
+
+        <div id="headstrip">
+            <div id="logo"></div>
+            <div id="info">i</div>
+            <div id="new">NEW</div>
+            <div style="clear:both;height:0;"></div>
+        </div>
+        
+        <ul id="historylist"></ul>
 
     </body>
 </html>
