@@ -11,7 +11,7 @@
 
     <description>View web pages in an iFrame</description>
 
-    <!--<gap:platform name="android" />-->
+    <gap:platform name="android" />
 
     <!--<preference name="orientation" value="portrait" />-->
 	
