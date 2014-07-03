@@ -18,7 +18,11 @@
             function onLoad() {
                 'use strict';
                 //alert('onLoad');
-                document.addEventListener("deviceready", onDeviceReady, false);
+                //document.addEventListener("deviceready", onDeviceReady, false);
+                document.addEventListener("deviceready", function(){
+                      alert("123");
+                 },true);
+
             }
         </script>
     </head>

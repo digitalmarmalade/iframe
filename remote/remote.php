@@ -88,26 +88,10 @@
 
             });
 
-    onDeviceReady = function () {
-        alert('remote onDeviceReady');
-		document.addEventListener("backbutton", onBackKeyDown, false);
-	};
-
-	onBackKeyDown = function () {
-		alert('remote onBackKeyDown');
-		//navigator.app.exitApp();
-	};
-
-    function onLoad() {
-        'use strict';
-        alert('remote onLoad');
-        document.addEventListener("deviceready", onDeviceReady, false);
-    }
-
         </script>
 
     </head>
-    <body onload="onLoad();" style="margin:0;">
+    <body">
 
         <div id="headstrip">
             <div id="logo"><img src="DM-LOGO-32.png"/></div>
