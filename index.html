@@ -5,29 +5,29 @@
         <script src="js/jquery-1.10.2.min.js" ></script>
         <script>
             var AM = window.AM || {};
-            (function () {
 
-                        AM.onDeviceReady = function () {
-                            alert('onDeviceReady');
-                            document.addEventListener("backbutton", AM.onBackKeyDown, false);
-                        };
-                        AM.onBackKeyDown = function () {
-                            alert('onBackKeyDown');
-                            //navigator.app.exitApp();
-                            return false;
-                        };
-
-            }());
-            function onLoad () {
-                alert('onLoad');
+            AM.onDeviceReady = function () {
                 'use strict';
+                alert('onDeviceReady');
+                document.addEventListener("backbutton", AM.onBackKeyDown, false);
+            };
+            AM.onBackKeyDown = function () {
+                'use strict';
+                alert('onBackKeyDown');
+                //navigator.app.exitApp();
+                return false;
+            };
+
+            function onLoad() {
+                'use strict';
+                alert('onLoad');
                 document.addEventListener("deviceready", AM.onDeviceReady, false);
             }
         </script>
     </head>
 
-    <body onload="onLoad()" style="margin:0;">
-        <iframe src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"/>
+    <body onload="onLoad();" style="margin:0;">
+        <iframe src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
     </body>
 
 </html>
