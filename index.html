@@ -1,34 +1,31 @@
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>Pause Example</title>
 
-    <head>
-        <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/jquery-1.10.2.min.js" ></script>
-        <script>
-            function onBackKeyDown() {
-                'use strict';
-                //alert('onBackKeyDown');
-                //navigator.app.exitApp();
-                return false;
-            }
-            var onDeviceReady = function() {
-                'use strict';
-                //alert('onDeviceReady');
-                document.addEventListener("backbutton", onBackKeyDown, false);
-            }
-            function onLoad() {
-                'use strict';
-                //alert('onLoad');
-                //document.addEventListener("deviceready", onDeviceReady, false);
-                document.addEventListener("deviceready", function(){
-                      alert("123");
-                 },true);
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
-            }
-        </script>
-    </head>
+    // Wait for device API libraries to load
+    //
+    function onLoad() {
+        alert('onLoad');
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
 
-    <body onload="onLoad();" style="margin:0;">
-        <iframe src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
-    </body>
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        document.addEventListener("pause", onPause, false);
+    }
 
+    // Handle the pause event
+    //
+    function onPause() {
+    }
+
+    </script>
+  </head>
+  <body onload="onLoad()">
+  </body>
 </html>
