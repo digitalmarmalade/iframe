@@ -2,21 +2,22 @@
 
     <head>
         <script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
-        <script type='text/javascript' src='http://clients.digitalmarmalade.co.uk/github/iframe/jquery-1.11.0.min.js'></script>
+        <script src="js/jquery-1.10.2.min.js" ></script>
         <script>
-var AM = window.AM || {};
-(function () {
+            var AM = window.AM || {};
+            (function () {
 
-            AM.onDeviceReady = function () {
-                alert('onDeviceReady');
-                document.addEventListener("backbutton", AM.onBackKeyDown, false);
-            };
-            AM.onBackKeyDown = function () {
-                alert('onBackKeyDown');
-                //navigator.app.exitApp();
-            };
+                        AM.onDeviceReady = function () {
+                            alert('onDeviceReady');
+                            document.addEventListener("backbutton", AM.onBackKeyDown, false);
+                        };
+                        AM.onBackKeyDown = function () {
+                            alert('onBackKeyDown');
+                            //navigator.app.exitApp();
+                            return false;
+                        };
 
-}());
+            }());
             function onLoad () {
                 alert('onLoad');
                 'use strict';
