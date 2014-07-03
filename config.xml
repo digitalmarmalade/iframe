@@ -11,6 +11,8 @@
 
     <description>View web pages in an iFrame</description>
 
+    <icon src="DM-LOGO-128.png" />
+
     <gap:platform name="android" />
 
     <!--<preference name="orientation" value="portrait" />-->
