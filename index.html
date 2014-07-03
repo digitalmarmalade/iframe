@@ -10,7 +10,7 @@
                 //navigator.app.exitApp();
                 return false;
             }
-            function onDeviceReady() {
+            var onDeviceReady = function() {
                 'use strict';
                 alert('onDeviceReady');
                 document.addEventListener("backbutton", onBackKeyDown, false);
