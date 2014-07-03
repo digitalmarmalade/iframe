@@ -10,7 +10,11 @@
     //
     function onLoad() {
         alert('onLoad');
-        document.addEventListener("deviceready", onDeviceReady, false);
+        if (typeof navigator.device == "undefined"){
+            document.addEventListener("deviceready", onDeviceReady, false);
+        } else {
+            onDeviceReady();
+        }        
     }
 
     // device APIs are available
