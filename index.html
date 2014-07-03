@@ -6,18 +6,18 @@
         <script>
             function onBackKeyDown() {
                 'use strict';
-                alert('onBackKeyDown');
+                //alert('onBackKeyDown');
                 //navigator.app.exitApp();
                 return false;
             }
             var onDeviceReady = function() {
                 'use strict';
-                alert('onDeviceReady');
+                //alert('onDeviceReady');
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
             function onLoad() {
                 'use strict';
-                alert('onLoad');
+                //alert('onLoad');
                 document.addEventListener("deviceready", onDeviceReady, false);
             }
         </script>

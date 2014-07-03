@@ -3,9 +3,9 @@
         <style type="text/css">
             body { margin:0 !important; background:#fff; color:#333; padding:0; font-family: sans-serif; }
             #headstrip { background:#333; padding:0px; }
-            #logo { float:left; height:26px; width:26px; border-radius:13px; background: #f90; margin:10px; }
-            #new { margin:10px; border-radius: 8px; float:right; background: #f90; padding: 5px 10px; font-size: 13px; font-weight: bold; cursor: pointer; }
-            #info { float:right; height:26px; width:26px; border-radius:13px; background: #f90; margin:10px; line-height:26px; text-align:center; font-weight:bold; }
+            #logo { float:left; height:32px; width:32px; margin:10px; }
+            #new { margin:10px; border-radius: 8px; float:right; background: #f90; padding: 8px 10px; font-size: 13px; font-weight: bold; cursor: pointer; }
+            #info { float:right; height:32px; width:32px; border-radius:13px; background: #f90; margin:10px; line-height:32px; text-align:center; font-weight:bold; cursor: pointer; }
             p { margin:10px; }
             #historylist { padding:0; }
             #historylist li { padding:5px 10px; list-style-type: none; margin:0 5px 5px 0; cursor:pointer; }
@@ -66,21 +66,22 @@
                     var oHistory = JSON.parse(localStorage.getItem('github/iframe/history')) || [],
                         aHistory = [],
                         HTML = '',
-                        i;
+                        i,
+                        arrayOfTimestamps = [],
+                        objectOfURLs = {};
                     
                     for (i = 0; i < oHistory.length; i = i + 1) {
-                        console.log(oHistory[i]);
-                        aHistory[oHistory[i].id] = oHistory[i].URL;
-                        aHistory[i] = oHistory[i].id;
-                        HTML += '<li class="trg" data-href="' + oHistory[i].URL + '">' + oHistory[i].URL + '</li>';
-                    }
-                        
+                        arrayOfTimestamps.push(oHistory[i].id);
+                        objectOfURLs[oHistory[i].id] = oHistory[i].URL;
+                    }   
+
+                    arrayOfTimestamps.sort(function (a, b) {return b - a; });
+
+                    for (i = 0; i < oHistory.length; i = i + 1) {
+                        HTML += '<li class="trg" data-href="' + objectOfURLs[arrayOfTimestamps[i]] + '">' + objectOfURLs[arrayOfTimestamps[i]] + '</li>';
+                    }                        
                     $('#historylist').html(HTML);
 
-
-                    console.log(oHistory);
-                    //aURL2s.sort(function (a, b) {return a - b; });
-                    console.log(aHistory);
                 }
 
                 readURLs();
@@ -88,27 +89,28 @@
             });
 
     onDeviceReady = function () {
-        alert('onDeviceReady');
+        alert('remote onDeviceReady');
 		document.addEventListener("backbutton", onBackKeyDown, false);
 	};
 
 	onBackKeyDown = function () {
-		alert('a');
+		alert('remote onBackKeyDown');
 		//navigator.app.exitApp();
 	};
 
     function onLoad() {
         'use strict';
+        alert('remote onLoad');
         document.addEventListener("deviceready", onDeviceReady, false);
     }
 
         </script>
 
     </head>
-    <body>
+    <body onload="onLoad();" style="margin:0;">
 
         <div id="headstrip">
-            <div id="logo"></div>
+            <div id="logo"><img src="DM-LOGO-32.png"/></div>
             <div id="info">i</div>
             <div id="new">NEW</div>
             <div style="clear:both;height:0;"></div>
