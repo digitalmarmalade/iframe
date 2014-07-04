@@ -1,3 +1,12 @@
+<?php
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    header('Access-Control-Max-Age: 86400');
+    header('Access-Control-Expose-Headers: api-response-message');
+}
+?>
 <html style="margin:0;padding:0;">
     <head>
         <style type="text/css">
@@ -171,12 +180,11 @@
                     deviceInfo += '<p><b>$("body").width/height(): </b>' + $('body').width() + ' x ' + $('body').height() + '<br/>';
 
                     deviceInfo += '<h1>Device</h1>';
-                    deviceInfo += parent.deviceInfo;
+                    deviceInfo += pgDeviceInfo;
 
                     $('#deviceInfo').html(deviceInfo);
                 }
 
-                console.log(window);
                 readURLs();
                 
 
