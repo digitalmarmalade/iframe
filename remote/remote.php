@@ -9,81 +9,150 @@
             p { margin:10px; }
             #historylist { padding:0; }
             #historylist li { padding:5px 10px; list-style-type: none; margin:0 5px 5px 0; cursor:pointer; }
+            #historylist li span { height: 17px; width: 17px; display: inline-block; margin: 0 5px 0 0; text-indent: -10000px; line-height: 19px; border-radius: 2px; cursor: pointer; }
+            #historylist li span.edit { background: #8f8; }
+            #historylist li span.delete { background: #800; }
         </style>
         <script type='text/javascript' src='http://clients.digitalmarmalade.co.uk/github/iframe/jquery-1.11.0.min.js'></script>
         <script type='text/javascript'>
 
+            var bCurrentLocationIsHome = true;
+
             $(function(){
 
-                var startState = '';
+                var startState = '',
+                arrayOfTimestamps = [],
+                objectOfURLs = {};
 
                 function saveStartState() {                    
                     startState = $('body').html();
-                }
+                    console.log(startState);
+                };
 
+                function resetStartState() {                    
+                    $('body').html(startState);
+                    readURLs();
+                    bCurrentLocationIsHome = true;
+                };
 
-
-                $('body').on('click', '.trg', function(){
-                    goFrame($(this).data('href'));
+                $('body').on('click', '.trg', function(e){
+                    if(e.target.className == 'edit') {
+                        editURL($(this).data('id'));
+                    }
+                    if(e.target.className == 'delete') {
+                        confirmDeleteURL($(this).data('id'));
+                    }
+                    if(e.target.className == 'trg') {
+                        goFrame($(this).data('href'));
+                    }
                     return false;
                 });
 
-                $('#manualform').submit(function(){
-                    if($('#manualitem').val() != '') {
-                        var URL = $('#manualitem').val();
-                        storeURL(URL);
-                        goFrame(URL);
-                        return false;
-                    }
-                });
 
                 $('#new').click(function(){
-                    var URL = prompt('Enter URL to put in iFrame', 'http://');
-                    if(URL != null) {
-                        storeURL(URL);
-                        goFrame(URL);
-                    }
+                    requestNewURL();
                     return false;
                 });
 
+                function requestNewURL () {
+                    var URL = prompt('Enter URL to put in iFrame', 'http://');
+                    if(URL != null) {
+                        requestNameForURL(URL);
+                    }
+                }
+
+                function requestNameForURL (URL) {
+                    var name = prompt('Enter name for this link', URL);
+                    if(name != null) {
+                        storeURL(URL, name);
+                        goFrame(URL);
+                    }
+                }
+
+                function editURL (id) {
+                    var URL = prompt('Enter URL to put in iFrame', objectOfURLs[id].URL);
+                    if(URL != null) {
+                        editName(id, URL);
+                    }
+                }
+
+                function confirmDeleteURL (id) {
+                    var r = confirm('Are you sure you want to delete ' + objectOfURLs[id].name + '?');
+                    if(r == true) {
+                        deleteURL(id);
+                    }
+                }
+
+                function editName (id, URL) {
+                    var name = prompt('Enter name for this link', objectOfURLs[id].name);
+                    if(name != null) {
+                        updateURL(id, URL, name);
+                    }
+                }
+
                 function goFrame(URL) {
+                    bCurrentLocationIsHome = false;
                     $('body').html('<iframe src="' + URL + '" width="100%" height="100%" frameborder="0" border="0" cellspacing="0"/>');
                 }
 
-                function storeURL(URL) {
+                function storeURL(URL, name) {
                     console.log(URL);
                     var aURLs = JSON.parse(localStorage.getItem('github/iframe/history')) || [];
                     var id = (new Date()).getTime();
                     var data = {
                         id: id,
-                        URL: URL
+                        URL: URL,
+                        name: name
                     };
                     aURLs.push(data);
                     localStorage.setItem('github/iframe/history', JSON.stringify(aURLs));
+                }
+
+                function updateURL(id, URL, name) {
+                var aURLs = [],
+                    idLoop;
+                    objectOfURLs[id].URL = URL;
+                    objectOfURLs[id].name = name;
+                    for(idLoop in objectOfURLs) {
+                        aURLs.push(objectOfURLs[idLoop]); 
+                    }
+                    localStorage.setItem('github/iframe/history', JSON.stringify(aURLs));
+                    window.location.reload();
+                }
+
+                function deleteURL(id) {
+                var aURLs = [],
+                    idLoop;
+                    for(idLoop in objectOfURLs) {
+                        if(idLoop != id) {
+                            aURLs.push(objectOfURLs[idLoop]); 
+                        }
+                    }
+                    localStorage.setItem('github/iframe/history', JSON.stringify(aURLs));
+                    window.location.reload();
                 }
 
                 function readURLs() {
                     var oHistory = JSON.parse(localStorage.getItem('github/iframe/history')) || [],
                         aHistory = [],
                         HTML = '',
-                        i,
-                        arrayOfTimestamps = [],
-                        objectOfURLs = {};
+                        i;
                     
                     for (i = 0; i < oHistory.length; i = i + 1) {
                         arrayOfTimestamps.push(oHistory[i].id);
-                        objectOfURLs[oHistory[i].id] = oHistory[i].URL;
+                        objectOfURLs[oHistory[i].id] = oHistory[i];
                     }   
 
                     arrayOfTimestamps.sort(function (a, b) {return b - a; });
 
                     for (i = 0; i < oHistory.length; i = i + 1) {
-                        HTML += '<li class="trg" data-href="' + objectOfURLs[arrayOfTimestamps[i]] + '">' + objectOfURLs[arrayOfTimestamps[i]] + '</li>';
+                        HTML += '<li class="trg" data-id="' + objectOfURLs[arrayOfTimestamps[i]].id + '" data-href="' + objectOfURLs[arrayOfTimestamps[i]].URL + '"><span class="edit" title="edit">edit</span><span class="delete" title="delete">delete</span>' + objectOfURLs[arrayOfTimestamps[i]].name + '</li>';
                     }                        
                     $('#historylist').html(HTML);
 
                 }
 
+                saveStartState();
                 readURLs();
 
             });

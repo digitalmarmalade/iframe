@@ -4,10 +4,15 @@
         <script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/jquery-1.10.2.min.js" ></script>
         <script>
+
+            var frame;
+
             function onBackKeyDown() {
                 'use strict';
-                alert('onBackKeyDown');
-                //navigator.app.exitApp();
+                alert('onBackKeyDown', frame.bCurrentLocationIsHome);
+                if(frame.bCurrentLocationIsHome == true) {
+                    navigator.app.exitApp();
+                }
                 return false;
             }
             var onDeviceReady = function() {
@@ -17,18 +22,22 @@
             }
             function onLoad() {
                 'use strict';
-                alert('onLoad');
+
+                var frame = window.frames[0].window;
+
                 if (typeof navigator.device == "undefined"){
                     document.addEventListener("deviceready", onDeviceReady, false);
                 } else {
                     onDeviceReady();
                 }  
             }
+
         </script>
     </head>
 
     <body onload="onLoad();" style="margin:0;">
-        <iframe src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
+        <!--<iframe id="iframe" src="remote/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>-->
+        <iframe id="iframe" src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
     </body>
 
 </html>
