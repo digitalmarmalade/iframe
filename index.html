@@ -9,11 +9,17 @@
 
             function onBackKeyDown() {
                 'use strict';
-                //alert('onBackKeyDown');
+
+                alert('onBackKeyDown');
+                
                 var frame = window.frames[0].window;
-                $('body').append(frame.bCurrentLocationIsHome);
+                
+
                 if(frame.bCurrentLocationIsHome == true) {
+                    alert('bCurrentLocationIsHome is true');
                     navigator.app.exitApp();
+                } else {
+                    alert('bCurrentLocationIsHome is false');
                 }
                 return false;
             }
