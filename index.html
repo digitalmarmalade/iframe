@@ -9,7 +9,8 @@
 
             function onBackKeyDown() {
                 'use strict';
-                alert('onBackKeyDown', frame.bCurrentLocationIsHome);
+                alert('onBackKeyDown');
+                alert(frame.bCurrentLocationIsHome);
                 if(frame.bCurrentLocationIsHome == true) {
                     navigator.app.exitApp();
                 }
@@ -17,7 +18,6 @@
             }
             var onDeviceReady = function() {
                 'use strict';
-                alert('onDeviceReady');
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
             function onLoad() {
