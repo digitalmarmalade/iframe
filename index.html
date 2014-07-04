@@ -5,33 +5,26 @@
         <script src="js/jquery-1.10.2.min.js" ></script>
         <script>
 
-            var frame;
-
             function onBackKeyDown() {
                 'use strict';
-
-                alert('onBackKeyDown');
                 
                 var frame = window.frames[0].window;
-                
 
                 if(frame.bCurrentLocationIsHome == true) {
-                    alert('bCurrentLocationIsHome is true');
                     navigator.app.exitApp();
                 } else {
-                    alert('bCurrentLocationIsHome is false');
                     frame.location.reload();
                 }
                 return false;
             }
             var onDeviceReady = function() {
                 'use strict';
+
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
+
             function onLoad() {
                 'use strict';
-
-                var frame = window.frames[0].window;
 
                 if (typeof navigator.device == "undefined"){
                     document.addEventListener("deviceready", onDeviceReady, false);
@@ -39,12 +32,6 @@
                     onDeviceReady();
                 }  
             }
-
-            setTimeout(
-                function(){
-                    //onBackKeyDown();
-                }, 2000
-            );
 
         </script>
     </head>

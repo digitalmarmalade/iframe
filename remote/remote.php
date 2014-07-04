@@ -21,6 +21,9 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
             #historylist li span { height: 17px; width: 17px; display: inline-block; margin: 0 5px 0 0; text-indent: -10000px; line-height: 19px; border-radius: 2px; cursor: pointer; }
             #historylist li span.edit { background: #8f8; }
             #historylist li span.delete { background: #800; }
+            #deviceInfo { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.9); color:#333; padding: 40px 10px 0; display:none; }
+            #deviceInfo h1 { font-size:125%; margin:30px 10px 10px 10px; }
+            #deviceInfo p { font-size:90%; margin:10px; }
         </style>
         <script type='text/javascript' src='http://clients.digitalmarmalade.co.uk/github/iframe/jquery-1.11.0.min.js'></script>
         <script type='text/javascript'>
@@ -29,20 +32,8 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
             $(function(){
 
-                var startState = '',
-                arrayOfTimestamps = [],
+                var arrayOfTimestamps = [],
                 objectOfURLs = {};
-
-                function saveStartState() {                    
-                    startState = $('body').html();
-                    console.log(startState);
-                };
-
-                function resetStartState() {                    
-                    $('body').html(startState);
-                    readURLs();
-                    bCurrentLocationIsHome = true;
-                };
 
                 $('body').on('click', '.trg', function(e){
                     if(e.target.className == 'edit') {
@@ -57,9 +48,18 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
                     return false;
                 });
 
-
                 $('#new').click(function(){
                     requestNewURL();
+                    return false;
+                });
+
+                $('#info').click(function(){
+                    $('#deviceInfo').show();
+                    return false;
+                });
+
+                $('#deviceInfo').click(function(){
+                    $('#deviceInfo').hide();
                     return false;
                 });
 
@@ -161,8 +161,30 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
                 }
 
-                saveStartState();
+                function outputDeviceInfo() {
+                    var deviceInfo = '';
+
+                    deviceInfo += '<h1>NAVIGATOR</h1>';
+                    deviceInfo += '<p><b>appCodeName: </b>' + navigator.appCodeName + '</p>';
+                    deviceInfo += '<p><b>appName: </b>' + navigator.appName + '</p>';
+                    deviceInfo += '<p><b>appVersion: </b>' + navigator.appVersion + '</p>';
+                    deviceInfo += '<p><b>onLine: </b>' + navigator.onLine + '</p>';
+                    deviceInfo += '<p><b>platform: </b>' + navigator.platform + '</p>';
+                    deviceInfo += '<p><b>userAgent: </b>' + navigator.userAgent + '</p>';
+                    
+                    deviceInfo += '<h1>SCREEN</h1>';
+                    deviceInfo += '<p><b>Resolution: </b>' + screen.width + ' x ' + screen.height + '<br/>';
+                    deviceInfo += '<p><b>Viewport: </b>' + $(window).width() + ' x ' + $(window).height() + '<br/>';
+                    deviceInfo += '<p><b>HTML Body: </b>' + $('body').width() + ' x ' + $('body').height() + '<br/>';
+
+                    $('#deviceInfo').html(deviceInfo);
+                }
+
+
+                
+console.log(window);
                 readURLs();
+                outputDeviceInfo();
 
             });
 
@@ -179,6 +201,8 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         </div>
         
         <ul id="historylist"></ul>
+
+        <div id="deviceInfo"></div>
 
     </body>
 </html>
