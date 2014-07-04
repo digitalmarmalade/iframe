@@ -1,12 +1,3 @@
-<?php
-if (isset($_SERVER['HTTP_ORIGIN'])) {
-    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    header('Access-Control-Max-Age: 86400');
-    header('Access-Control-Expose-Headers: api-response-message');
-}
-?>
 <html style="margin:0;padding:0;">
     <head>
         <style type="text/css">
