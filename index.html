@@ -10,7 +10,8 @@
             function onBackKeyDown() {
                 'use strict';
                 alert('onBackKeyDown');
-                alert(frame.bCurrentLocationIsHome);
+                var frame = window.frames[0].window;
+                $('body').append(frame.bCurrentLocationIsHome);
                 if(frame.bCurrentLocationIsHome == true) {
                     navigator.app.exitApp();
                 }
@@ -31,6 +32,12 @@
                     onDeviceReady();
                 }  
             }
+
+            setTimeout(
+                function(){
+                    onBackKeyDown();
+                }, 2000
+            );
 
         </script>
     </head>
