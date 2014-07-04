@@ -5,6 +5,8 @@
         <script src="js/jquery-1.10.2.min.js" ></script>
         <script>
 
+            var deviceInfo = '';
+
             function onBackKeyDown() {
                 'use strict';
                 
@@ -19,26 +21,36 @@
             }
             var onDeviceReady = function() {
                 'use strict';
-
+                if (window.location.host != '127.0.0.1'){
+                    setDeviceInfo();
+                }
                 document.addEventListener("backbutton", onBackKeyDown, false);
             }
 
             function onLoad() {
                 'use strict';
 
-                if (typeof navigator.device == "undefined"){
+                if (typeof navigator.device == 'undefined' && window.location.host != '127.0.0.1'){
                     document.addEventListener("deviceready", onDeviceReady, false);
                 } else {
                     onDeviceReady();
                 }  
             }
 
+            function setDeviceInfo() {
+                deviceInfo += '<p><b>device.name: </b>' + device.name + '</p>';
+                deviceInfo += '<p><b>device.phonegap: </b>' + device.phonegap + '</p>';
+                deviceInfo += '<p><b>device.platform: </b>' + device.platform + '</p>';
+                deviceInfo += '<p><b>device.uuid: </b>' + device.uuid + '</p>';
+                deviceInfo += '<p><b>device.version: </b>' + device.version + '</p>';
+            }
+
         </script>
     </head>
 
     <body onload="onLoad();" style="margin:0;">
-        <!--<iframe id="iframe" src="remote/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>-->
-        <iframe id="iframe" src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
+        <iframe id="iframe" src="remote/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>
+        <!--<iframe id="iframe" src="http://clients.digitalmarmalade.co.uk/github/iframe/remote.php" width="100%" height="100%" frameborder="0" border="0" cellspacing="0" style="background:#fff;"></iframe>-->
     </body>
 
 </html>

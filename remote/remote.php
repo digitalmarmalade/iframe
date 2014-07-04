@@ -10,6 +10,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 <html style="margin:0;padding:0;">
     <head>
         <style type="text/css">
+            * { box-sizing: border-box; }
             body { margin:0 !important; background:#fff; color:#333; padding:0; font-family: sans-serif; }
             #headstrip { background:#333; padding:0px; }
             #logo { float:left; height:32px; width:32px; margin:10px; }
@@ -54,6 +55,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
                 });
 
                 $('#info').click(function(){
+                    outputDeviceInfo();
                     $('#deviceInfo').show();
                     return false;
                 });
@@ -164,27 +166,28 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
                 function outputDeviceInfo() {
                     var deviceInfo = '';
 
-                    deviceInfo += '<h1>NAVIGATOR</h1>';
-                    deviceInfo += '<p><b>appCodeName: </b>' + navigator.appCodeName + '</p>';
-                    deviceInfo += '<p><b>appName: </b>' + navigator.appName + '</p>';
-                    deviceInfo += '<p><b>appVersion: </b>' + navigator.appVersion + '</p>';
-                    deviceInfo += '<p><b>onLine: </b>' + navigator.onLine + '</p>';
-                    deviceInfo += '<p><b>platform: </b>' + navigator.platform + '</p>';
-                    deviceInfo += '<p><b>userAgent: </b>' + navigator.userAgent + '</p>';
+                    deviceInfo += '<h1>Navigator</h1>';
+                    deviceInfo += '<p><b>navigator.appCodeName: </b>' + navigator.appCodeName + '</p>';
+                    deviceInfo += '<p><b>navigator.appName: </b>' + navigator.appName + '</p>';
+                    deviceInfo += '<p><b>navigator.appVersion: </b>' + navigator.appVersion + '</p>';
+                    deviceInfo += '<p><b>navigator.onLine: </b>' + navigator.onLine + '</p>';
+                    deviceInfo += '<p><b>navigator.platform: </b>' + navigator.platform + '</p>';
+                    deviceInfo += '<p><b>navigator.userAgent: </b>' + navigator.userAgent + '</p>';
                     
-                    deviceInfo += '<h1>SCREEN</h1>';
-                    deviceInfo += '<p><b>Resolution: </b>' + screen.width + ' x ' + screen.height + '<br/>';
-                    deviceInfo += '<p><b>Viewport: </b>' + $(window).width() + ' x ' + $(window).height() + '<br/>';
-                    deviceInfo += '<p><b>HTML Body: </b>' + $('body').width() + ' x ' + $('body').height() + '<br/>';
+                    deviceInfo += '<h1>Resolutions</h1>';
+                    deviceInfo += '<p><b>screen.width/height: </b>' + screen.width + ' x ' + screen.height + '<br/>';
+                    deviceInfo += '<p><b>$(window).width/height(): </b>' + $(window).width() + ' x ' + $(window).height() + '<br/>';
+                    deviceInfo += '<p><b>$("body").width/height(): </b>' + $('body').width() + ' x ' + $('body').height() + '<br/>';
+
+                    deviceInfo += '<h1>Device</h1>';
+                    deviceInfo += parent.deviceInfo;
 
                     $('#deviceInfo').html(deviceInfo);
                 }
 
-
-                
-console.log(window);
+                console.log(window);
                 readURLs();
-                outputDeviceInfo();
+                
 
             });
 
