@@ -49,18 +49,18 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
                     return false;
                 });
 
-                $('#new').click(function(){
+                $('body').on('click', '#new', function(){
                     requestNewURL();
                     return false;
                 });
 
-                $('#info').click(function(){
+                $('body').on('click', '#info', function(){
                     outputDeviceInfo();
                     $('#deviceInfo').show();
                     return false;
                 });
 
-                $('#deviceInfo').click(function(){
+                $('body').on('click', '#deviceInfo', function(){
                     $('#deviceInfo').hide();
                     return false;
                 });
